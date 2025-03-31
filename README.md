@@ -19,8 +19,8 @@ A web application that provides an interface to interact with Meta's Llama 2 mod
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd webllm
+git clone https://github.com/Swastik-Swarup-Dash/WebLLM.git
+cd LLM
 ```
 
 2. Create a virtual environment and activate it:
@@ -37,6 +37,7 @@ pip install -r requirements.txt
 4. Create a `.env` file in the root directory and add your Llama API token:
 ```
 LLAMA_TOKEN=your_token_here
+GROQ_TOKEN=your_token_here
 ```
 
 ## Running the Application
@@ -54,9 +55,8 @@ http://localhost:5000
 ## Available Models
 
 The application currently supports the following Llama 2 models:
-- Llama 2 7B Chat (7 billion parameters)
-- Llama 2 13B Chat (13 billion parameters)
-- Llama 2 70B Chat (70 billion parameters)
+- llama-3.3-70b-versatile (70 billion parameters)
+
 
 All models are:
 - Optimized for chat interactions
