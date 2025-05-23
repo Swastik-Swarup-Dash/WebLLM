@@ -1,101 +1,138 @@
 /* Custom styles to complement Bootstrap */
 
-/* Theme Variables */
+/* Color Variables */
 :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8f9fa;
-    --text-primary: #333333;
-    --text-secondary: #666666;
-    --border-color: #dee2e6;
-    --card-bg: rgba(255, 255, 255, 0.95);
-    --input-bg: #ffffff;
-    --input-text: #1a1a2e;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-}
-
-/* Dark Mode Variables */
-.dark-mode {
-    --bg-primary: #1a1a2e;
-    --bg-secondary: #16213e;
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --border-color: rgba(255, 255, 255, 0.1);
-    --card-bg: rgba(26, 26, 46, 0.95);
-    --input-bg: #ffffff;
-    --input-text: #1a1a2e;
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --accent-color: #4895ef;
+    --dark-bg: #1a1a2e;
+    --light-bg: #16213e;
+    --text-light: #ffffff;
+    --text-dark: #1a1a2e;
     --shadow-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Body styles */
 body {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    background-attachment: fixed;
-    color: #fff;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--light-bg) 100%);
+    color: var(--text-light);
     position: relative;
     overflow-x: hidden;
 }
 
-/* AI Background Pattern */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-    background-size: 100px 100px;
-    opacity: 0.1;
-    z-index: -1;
-    animation: backgroundMove 20s linear infinite;
-}
-
-/* Animated background elements */
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.1) 50%, transparent 52%),
-        linear-gradient(-45deg, transparent 48%, rgba(255, 255, 255, 0.1) 50%, transparent 52%);
-    background-size: 60px 60px;
-    opacity: 0.05;
-    z-index: -1;
-    animation: backgroundShift 15s linear infinite;
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--light-bg) 100%);
+    padding-top: 80px;
 }
 
 /* Navbar customization */
 .navbar {
-    background: rgba(13, 110, 253, 0.95) !important;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    box-shadow: 0 2px 10px var(--shadow-color);
 }
 
 .navbar-brand {
-    font-weight: 600;
-    color: #fff !important;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text-light) !important;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+}
+
+.nav-link {
+    color: var(--text-light) !important;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-color) !important;
+}
+
+/* Form controls customization */
+.form-select,
+.form-control {
+    background: var(--dark-bg) !important;
+    color: var(--text-light) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.25rem rgba(72, 149, 239, 0.25);
+}
+
+/* Button customization */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--shadow-color);
 }
 
 /* Card customization */
 .card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: var(--dark-bg) !important;
     border: none;
-    transition: transform 0.2s ease-in-out;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    transition: transform 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+.card-title {
+    color: var(--text-light) !important;
+    margin-bottom: 1.5rem;
+}
+
+/* Loading spinner */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.25rem;
+}
+
+/* Animations */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        padding-top: 60px;
+    }
+    
+    .display-4 {
+        font-size: 2.5rem;
+    }
+    
+    .lead {
+        font-size: 1.2rem;
+    }
 }
 
 /* Form controls customization */
@@ -171,10 +208,115 @@ body::after {
     color: #0d6efd !important;
 }
 
-/* Response container customization */
-#response-container .card {
-    background: rgba(248, 249, 250, 0.95);
-    border-left: 4px solid #0d6efd;
+/* Response section styles */
+.response-card {
+    background: var(--dark-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px var(--shadow-color);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.response-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px var(--shadow-color);
+}
+
+.response-header {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.response-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.response-icon i {
+    font-size: 1.2rem;
+    color: var(--text-light);
+}
+
+.response-title {
+    flex: 1;
+}
+
+.response-title h5 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--text-light);
+}
+
+.response-timestamp {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0.25rem 0 0;
+}
+
+.response-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.response-actions .btn {
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.response-actions .btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.response-actions .btn i {
+    font-size: 0.9rem;
+}
+
+.response-content {
+    padding: 1.5rem;
+    background: var(--dark-bg);
+}
+
+.response-text {
+    color: var(--text-light);
+    line-height: 1.6;
+    font-size: 1rem;
+    word-break: break-word;
+}
+
+/* Add copy functionality */
+.copy-btn {
+    position: relative;
+}
+
+.copy-btn::after {
+    content: "Copied!";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.copy-btn.copied::after {
+    opacity: 1;
 }
 
 /* Footer customization */

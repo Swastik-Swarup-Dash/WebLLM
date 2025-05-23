@@ -6,6 +6,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const loading = document.getElementById('loading');
     const responseContainer = document.getElementById('response-container');
     const responseText = document.getElementById('response-text');
+    const copyBtn = document.querySelector('.copy-btn');
+    const shareBtn = document.querySelector('.share-btn');
+
+    // Add copy functionality
+    copyBtn.addEventListener('click', () => {
+        const text = responseText.textContent;
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                copyBtn.classList.add('copied');
+                setTimeout(() => copyBtn.classList.remove('copied'), 1500);
+            })
+            .catch(err => {
+                console.error('Failed to copy text: ', err);
+                // Fallback for browsers without clipboard API
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            });
+    });
+
+    // Add share functionality
+    shareBtn.addEventListener('click', () => {
+        const text = responseText.textContent;
+        if (navigator.share) {
+            navigator.share({
+                title: 'WebLLM Response',
+                text: text
+            })
+            .catch(err => console.error('Error sharing:', err));
+        } else {
+            // Fallback for browsers without Web Share API
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    const alert = document.createElement('div');
+                    alert.className = 'alert alert-info alert-dismissible fade show mt-3';
+                    alert.innerHTML = `
+                        Response copied to clipboard
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    `;
+                    responseContainer.appendChild(alert);
+                    setTimeout(() => alert.remove(), 3000);
+                })
+                .catch(err => console.error('Error copying:', err));
+        }
+    });
 
     // Update model description when selection changes
     modelSelect.addEventListener('change', () => {

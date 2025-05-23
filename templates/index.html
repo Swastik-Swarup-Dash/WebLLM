@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebLLM - Open Source LLM Interface</title>
+    <title>WebLLM - AI Model Interface</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body class="bg-light">
+<body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary shadow-sm fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <i class="fas fa-robot me-2"></i>WebLLM
@@ -33,78 +35,103 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h2 class="card-title text-center mb-4">
-                            <i class="fas fa-brain me-2"></i>AI Model Interface
-                        </h2>
-                        
-                        <!-- Model Selection -->
-                        <div class="mb-4">
-                            <label for="model-select" class="form-label">Select Model</label>
-                            <select id="model-select" class="form-select">
-                                {% for model in models %}
-                                <option value="{{ model.id }}" data-description="{{ model.description }}">
-                                    {{ model.name }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                            <p id="model-description" class="form-text text-muted mt-2"></p>
-                        </div>
+    <!-- Hero Section -->
+    <section class="hero-section py-5">
+        <div class="container">
+            <div class="row justify-content-center align-items-center min-vh-100">
+                <div class="col-lg-8 text-center" data-aos="fade-up">
+                    <h1 class="display-4 fw-bold text-white mb-4">
+                        <i class="fas fa-brain me-2"></i>AI Model Interface
+                    </h1>
+                    <p class="lead text-light mb-5">
+                        Interact with powerful AI models through an intuitive interface
+                    </p>
+                    
+                    <!-- Model Selection -->
+                    <div class="mb-4">
+                        <label for="model-select" class="form-label text-light">Select Model</label>
+                        <select id="model-select" class="form-select bg-dark text-white border-0">
+                            {% for model in models %}
+                            <option value="{{ model.id }}" data-description="{{ model.description }}">
+                                {{ model.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <p id="model-description" class="text-light mt-2"></p>
+                    </div>
 
-                        <!-- Prompt Input -->
-                        <div class="mb-4">
-                            <label for="prompt-input" class="form-label">Enter your prompt</label>
-                            <textarea id="prompt-input" class="form-control" rows="4" 
-                                    placeholder="Type your message here..."></textarea>
-                        </div>
+                    <!-- Prompt Input -->
+                    <div class="mb-4">
+                        <label for="prompt-input" class="form-label text-light">Enter your prompt</label>
+                        <textarea id="prompt-input" class="form-control bg-dark text-white border-0" rows="4" 
+                                placeholder="Type your message here..."></textarea>
+                    </div>
 
-                        <!-- Generate Button -->
-                        <div class="d-grid">
-                            <button id="generate-btn" class="btn btn-primary btn-lg">
-                                <i class="fas fa-magic me-2"></i>Generate Response
-                            </button>
-                        </div>
+                    <!-- Generate Button -->
+                    <div class="d-grid gap-2">
+                        <button id="generate-btn" class="btn btn-primary btn-lg rounded-pill px-5">
+                            <i class="fas fa-magic me-2"></i>Generate Response
+                        </button>
+                    </div>
 
-                        <!-- Loading Spinner -->
-                        <div id="loading" class="text-center mt-4 d-none">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            <p class="mt-2 text-muted">Generating response...</p>
+                    <!-- Loading Spinner -->
+                    <div id="loading" class="text-center mt-4 d-none">
+                        <div class="spinner-border text-light" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
+                        <p class="mt-2 text-light">Generating response...</p>
+                    </div>
 
-                        <!-- Response Container -->
-                        <div id="response-container" class="mt-4 d-none">
-                            <div class="card bg-light">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <i class="fas fa-reply me-2"></i>Response
-                                    </h5>
-                                    <div id="response-text" class="card-text"></div>
+                    <!-- Response Container -->
+                    <div id="response-container" class="mt-4 d-none">
+                        <div class="response-card">
+                            <div class="response-header">
+                                <div class="response-icon">
+                                    <i class="fas fa-reply"></i>
                                 </div>
+                                <div class="response-title">
+                                    <h5>Response</h5>
+                                    <p class="response-timestamp">Just now</p>
+                                </div>
+                                <div class="response-actions">
+                                    <button class="btn btn-sm btn-outline-light copy-btn" title="Copy response">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-light share-btn" title="Share response">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="response-content">
+                                <div id="response-text" class="response-text"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="footer mt-auto py-3 bg-light">
+    <footer class="footer mt-auto py-4 bg-dark text-white">
         <div class="container text-center">
-            <span class="text-muted">Built with <i class="fas fa-heart text-danger"></i> using Flask and Bootstrap</span>
+            <span class="text-light">Built with <i class="fas fa-heart text-danger"></i> using Flask and Bootstrap</span>
         </div>
     </footer>
+
+    <!-- AOS Animation JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
+</html>
 </html> 
